@@ -1,0 +1,52 @@
+// Andy Chen
+// 9/29/2025
+// CSE123
+// CO: Search Engine
+// TA: Anirudh Seshadri
+import java.util.*;
+// This class is a testing class , helps to show the result of 
+// method createIndex
+public class InvertedIndex {
+    public static void main(String[] args) {
+        List<Media> docs = List.of(
+            new Book("Mistborn", List.of("Brandon Sanderson"),
+                     new Scanner("Epic fantasy worldbuildling content")),
+            new Book("Farenheit 451", List.of("Ray Bradbury"),
+                     new Scanner("Realistic \"sci-fi\" content")),
+            new Book("The Hobbit", List.of("J.R.R. Tolkein"),
+                     new Scanner("Epic fantasy quest content"))
+        );
+        
+        Map<String, Set<Media>> result = createIndex(docs);
+        System.out.println(docs);
+        System.out.println();
+        System.out.println(result);
+    }
+
+    // TODO: Write and document your createIndex method here
+    // Behavior: 
+    //   - This method returns a Map include every single word in the content 
+    //   - of these movies and which of these movies contains the word                                                                                          
+    // Parameters:
+    //   - List<media> docs : a list contains several Media type objects
+    // Returns:
+    //   - Map<String, Set<Media>> index : returns the Map that called this method
+    // Exceptions:
+    //   -`none
+    public static Map<String, Set<Media>> createIndex(List<Media> docs) {
+        Map<String, Set<Media>> index = new TreeMap<>();
+        for(Media doc: docs){
+            List<String> containList = doc.getContent();
+            for(String containWord : containList){
+                containWord = containWord.toLowerCase();
+                if(!index.containsKey(containWord)){
+                    index.put(containWord, new HashSet<Media>());
+                } 
+                index.get(containWord).add(doc);
+             }
+        }
+        return index;
+    }
+
+        
+}
